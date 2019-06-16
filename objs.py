@@ -1,4 +1,5 @@
 import random
+import copy
 
 
 class Card():
@@ -60,6 +61,7 @@ class Hand():
         del self.cards[i]
         return card
 
+    # Give away all the cards
     def discard(self):
         handsCard = self.cards
         self.cards = []
@@ -77,10 +79,11 @@ class Table():
         self.hands = []
 
     def addHand(self, a):
-        self.hands.append(a)
+        tmp = copy.copy(a)
+        self.hands.append(tmp)
         return self.hands
 
-    def excludeHand(self, d):
+    def removeHand(self, d):
         hand = self.hands[d]
         del self.hands[d]
         return hand
