@@ -23,6 +23,14 @@ def engine():
         table.addHand(hand)
         hand.discard()
 
+    # take a card per hand
+    for i in table.hands:
+        s = i.removeCard(0)
+        table.cardsInPlay.append(s)
+
+    Maximal = max(table.cardsInPlay)
+
+
     # Debug output
     # TODELETE
     k = 0
@@ -30,9 +38,8 @@ def engine():
         k += 1
         print('\n\nCards in ', k, ' hand:\n')
         i.print()
-
-
     # TODO: play the game and detect a winner
+
 
 if __name__ == '__main__':
     engine()

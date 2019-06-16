@@ -74,6 +74,7 @@ class Hand():
 
 class Table():
     hands = []
+    cardsInPlay = []
 
     def __init__(self):
         self.hands = []
