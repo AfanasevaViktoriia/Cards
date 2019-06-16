@@ -92,3 +92,18 @@ class Table():
     def cleanTable(self):
         hands = []
         return hands
+
+    def findMaxCardIndex(self):
+        max = 0
+        maxi = 0
+        suit = 0
+        for i in range(0, len(self.cardsInPlay)):
+            if self.cardsInPlay[i].value > max:
+                max = self.cardsInPlay[i].value
+                maxi = i
+                suit = self.cardsInPlay[i].suit
+            if self.cardsInPlay[i].value == max:
+                if self.cardsInPlay[i].suit > suit:
+                    maxi = i
+                    suit = self.cardsInPlay[i].suit
+        return maxi
