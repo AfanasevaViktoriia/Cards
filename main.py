@@ -1,4 +1,5 @@
 import objs
+import paint
 
 
 def engine():
@@ -28,3 +29,4 @@ def engine():
 if __name__ == '__main__':
 
     engine()
+    paint.main()
