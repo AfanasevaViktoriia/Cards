@@ -71,7 +71,10 @@ class Hand():
 
 
 class Table():
-    hands = [1, 3, 5, 8]
+    hands = []
+
+    def __init__(self):
+        self.hands = []
 
     def addHand(self, a):
         self.hands.append(a)
