@@ -31,8 +31,6 @@ if __name__ == "__main__":
     addr = pd.DataFrame()
     xlss = []
     csvs = []
-    # print(clean_rubbish("#____Trash -s-ds 0d-09d__) f-E(80-ru349r"))
-    # print(clean_rubbish("# HID_PARTY"))
 
     for root, dirs, files in os.walk(path_to_project):
         xlss += [os.path.join(root, name) for name in files if
