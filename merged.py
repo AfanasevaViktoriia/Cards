@@ -1,5 +1,6 @@
 import pandas as pd
 import os
+from operator import methodcaller
 
 path_to_project = '/home/pavel/mercurialprojects/cdi-all/'
 sheet_name = 'MERGED'
@@ -7,10 +8,11 @@ sheet_name = 'MERGED'
 
 def check_trans(xls):
     df = pd.read_excel(xls, sheet_name=sheet_name)
-    if df.shape[0] > 0 and \
-            'HID_DIRECT_SCION' in df.columns.upper() \
-            and 'HID_FINAL_SCION' in df.columns.upper() \
-            and df[df['HID_DIRECT_SCION'] == df['HID_FINAL_SCION']].empty:
+    # map(methodcaller("upper"), df.columns)
+    df.columns = map(methodcaller("upper"), df.columns)
+    if df.shape[0] > 0 \
+            and 'TRANSITIONAL' in df.columns \
+            and not df[df['TRANSITIONAL'] == 1].empty:
         return True
     else:
         return False
@@ -19,7 +21,7 @@ def check_trans(xls):
 if __name__ == "__main__":
     xlss = []
 
-    with open('merged_xlss', 'w') as f:
+    with open('merged_xlss_tr', 'w') as f:
         for root, dirs, files in os.walk(path_to_project):
             for name in files:
                 if not root.__contains__('.hg') \
@@ -32,3 +34,8 @@ if __name__ == "__main__":
                         if check_trans(xls):
                             xlss.append(path)
                             f.write("%s\n" % path)
+
+
+            # and 'HID_DIRECT_SCION' in df.columns \
+            # and 'HID_FINAL_SCION' in df.columns \
+            # and df[df['HID_DIRECT_SCION'] == df['HID_FINAL_SCION']].empty:
