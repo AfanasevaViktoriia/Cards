@@ -18,10 +18,19 @@ if __name__ == '__main__':
 
     postal = postal.iloc[:, [1, 2, 9, 10]]
     postal.columns = ['postal', 'nname', 'latt', 'long']
+    postal.postal = postal.postal.astype(str)
+    ser = postal.groupby(['nname', 'latt', 'long']).agg({'postal': lambda x: ', '.join(x)})
+#    print(ser)
 
     df = pd.merge(left=geoid, right=altern, how='left', left_on='id', right_on='gid')
+    df = df.drop_duplicates()
     print(df)
-    final = pd.merge(left=df, right=postal, how='inner', left_on='altname', right_on='nname')
 
-    final = final.loc[:, ['id', 'nname', 'name', 'postal', 'latt', 'long', 'pop']].sort_values('pop', ascending=False).head(50)
-    print(final.head().values)
+    final = pd.merge(left=df, right=ser, how='inner', left_on='name', right_on='nname')
+    final = final.sort_values('pop', ascending=False)
+
+    print(final.head(50))
+    final = final.loc[:, ['id', 'nname', 'name', 'postal', 'latt', 'long', 'pop']]
+    print(final.head(50))
+
+#    print(final.head(20).values)
