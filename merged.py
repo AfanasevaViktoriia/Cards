@@ -11,8 +11,9 @@ def check_trans(xls):
     # map(methodcaller("upper"), df.columns)
     df.columns = map(methodcaller("upper"), df.columns)
     if df.shape[0] > 0 \
-            and 'TRANSITIONAL' in df.columns \
-            and not df[df['TRANSITIONAL'] == 1].empty:
+            and 'HID_DIRECT_SCION' in df.columns \
+            and 'HID_FINAL_SCION' in df.columns \
+            and not df[df['HID_DIRECT_SCION'] != df['HID_FINAL_SCION']].empty:
         return True
     else:
         return False
@@ -25,6 +26,7 @@ if __name__ == "__main__":
         for root, dirs, files in os.walk(path_to_project):
             for name in files:
                 if not root.__contains__('.hg') \
+                        and not root.__contains__('target') \
                         and name.lower().__contains__('dbstart.xls') \
                         and not name.lower().__contains__('lock'):
                     path = os.path.join(root, name)
@@ -35,7 +37,5 @@ if __name__ == "__main__":
                             xlss.append(path)
                             f.write("%s\n" % path)
 
-
-            # and 'HID_DIRECT_SCION' in df.columns \
-            # and 'HID_FINAL_SCION' in df.columns \
-            # and df[df['HID_DIRECT_SCION'] == df['HID_FINAL_SCION']].empty:
+            # and 'TRANSITIONAL' in df.columns \
+            # and not df[str(df['TRANSITIONAL']) == '1'].empty:
