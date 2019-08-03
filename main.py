@@ -1,5 +1,4 @@
 import objs
-import paint
 
 
 def engine():
